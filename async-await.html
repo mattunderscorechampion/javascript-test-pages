@@ -11,6 +11,9 @@
             keyword and a reject value is thrown. Together these keywords allow
             asynchronous code to be written as though it was synchronous.
         </p>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="script-error"></div>
         <p>
             <table>
                 <tr><th colspan="3">This table shows the result of awaiting on
@@ -62,6 +65,16 @@
         </p>
 
         <script>
+            // Set text indicating that async is not supported
+            document.getElementById('script-error').innerHTML =
+                '<p>The script could not be parsed, async/await not ' +
+                'supported.</p>';
+        </script>
+
+        <script>
+            // Clear the text indicating that async is not supported
+            document.getElementById('script-error').innerHTML = '';
+
             // The values used by the test
             var value = 5;
             var resolvedPromise = new Promise((resolve, reject) => {
