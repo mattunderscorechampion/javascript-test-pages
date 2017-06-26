@@ -40,11 +40,25 @@
                     <td id="result-3"></td>
                     <td id="error-3"></td>
                 </tr>
+                <tr>
+                    <td>Promise-like resolved to 5</td>
+                    <td id="result-4"></td>
+                    <td id="error-4"></td>
+                </tr>
+                <tr>
+                    <td>Promise-like rejected with an error</td>
+                    <td id="result-5"></td>
+                    <td id="error-5"></td>
+                </tr>
             </table>
         </p>
         <p>
             It is worth noting that Errors awaited on are not thrown they are
             returned as successful results of await.
+        </p>
+        <p>
+            A Promise-like object is an object with a then method but that is
+            not a promise.
         </p>
 
         <script>
@@ -53,10 +67,20 @@
             var resolvedPromise = new Promise((resolve, reject) => {
                 resolve(value);
             });
+            var resolvedPromiseLike = {
+                then: function(resolve, reject) {
+                    resolve(value);
+                }
+            };
             var error = new Error('An error');
             var rejectedPromise = new Promise((resolve, reject) => {
                 reject(error);
             });
+            var rejectedPromiseLike = {
+                then: function(resolve, reject) {
+                    reject(error);
+                }
+            };
 
             // The asynchronous function using await
             async function awaitOn(testId, value) {
@@ -75,6 +99,8 @@
             awaitOn(1, rejectedPromise);
             awaitOn(2, value);
             awaitOn(3, error);
+            awaitOn(4, resolvedPromiseLike);
+            awaitOn(5, rejectedPromiseLike);
         </script>
     </body>
 </html>
