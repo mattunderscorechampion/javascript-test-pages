@@ -45,30 +45,32 @@
 
         <script>
             // The values used by the test
-            const value = 5;
-            const resolvedPromise = new Promise((resolve, reject) => {
+            var value = 5;
+            var resolvedPromise = new Promise((resolve, reject) => {
                 resolve(value);
             });
-            const error = new Error('An error');
-            const rejectedPromise = new Promise((resolve, reject) => {
+            var error = new Error('An error');
+            var rejectedPromise = new Promise((resolve, reject) => {
                 reject(error);
             });
 
             // The asynchronous function using await
-            async function awaitOn(resultId, errorId, value) {
+            async function awaitOn(testId, value) {
                 try {
-                    document.getElementById(resultId).innerText = await value;
+                    var rId = 'result-' + testId;
+                    document.getElementById(rId).innerText = await value;
                 }
                 catch (e) {
-                    document.getElementById(errorId).innerText = e;
+                    var eId = 'error-' + testId;
+                    document.getElementById(eId).innerText = e;
                 }
             }
 
             // Pass different values to the asynchronous function to await on
-            awaitOn('result-0', 'error-0', resolvedPromise);
-            awaitOn('result-1', 'error-1', rejectedPromise);
-            awaitOn('result-2', 'error-2', value);
-            awaitOn('result-3', 'error-3', error);
+            awaitOn(0, resolvedPromise);
+            awaitOn(1, rejectedPromise);
+            awaitOn(2, value);
+            awaitOn(3, error);
         </script>
     </body>
 </html>
