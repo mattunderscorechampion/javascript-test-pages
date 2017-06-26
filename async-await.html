@@ -11,7 +11,7 @@
             keyword and a reject value is thrown. Together these keywords allow
             asynchronous code to be written as though it was synchronous.
         </p>
-        <div>
+        <p>
             <table>
                 <tr><th colspan="3">This table shows the result of awaiting on
                     different values in an async method</th></tr>
@@ -41,7 +41,11 @@
                     <td id="error-3"></td>
                 </tr>
             </table>
-        </div>
+        </p>
+        <p>
+            It is worth noting that Errors awaited on are not thrown they are
+            returned as successful results of await.
+        </p>
 
         <script>
             // The values used by the test
