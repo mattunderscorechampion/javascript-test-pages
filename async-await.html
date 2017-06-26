@@ -77,7 +77,7 @@
 
             // The values used by the test
             var value = 5;
-            var resolvedPromise = new Promise((resolve, reject) => {
+            var resolvedPromise = new Promise(function(resolve, reject) {
                 resolve(value);
             });
             var resolvedPromiseLike = {
@@ -86,7 +86,7 @@
                 }
             };
             var error = new Error('An error');
-            var rejectedPromise = new Promise((resolve, reject) => {
+            var rejectedPromise = new Promise(function(resolve, reject) {
                 reject(error);
             });
             var rejectedPromiseLike = {
