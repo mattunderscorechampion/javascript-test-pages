@@ -1,0 +1,13 @@
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-size: 16pt;
+}
+
+table {
+    margin: auto;
+    font-size: 13pt;
+    border: black solid 1px;
+}
