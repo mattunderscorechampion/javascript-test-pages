@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Modules test page</title>
+        <meta name="description" content="Test how your browser handles JavaScript modules." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+    </head>
+    <body>
+        <h1>Modules test page</h1>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <p id="results">
+        </p>
+
+        <script nomodule>
+            document.getElementById('results').innerText = 'Modules not supported';
+        </script>
+
+        <script type="module">
+            document.getElementById('results').innerText = 'Modules supported';
+        </script>
+    </body>
+</html>
