@@ -4,10 +4,20 @@ body {
   margin: auto;
   padding: 20px;
   font-size: 16pt;
+  line-height: 1.5em;
 }
 
 table {
     margin: auto;
     font-size: 13pt;
     border: black solid 1px;
+}
+
+th {
+    border-bottom: black solid 1px;
+    padding: 2px;
+}
+
+td {
+    padding: 2px;
 }
