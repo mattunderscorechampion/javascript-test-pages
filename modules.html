@@ -8,15 +8,28 @@
         <h1>Modules test page</h1>
         <noscript><p>JavaScript is not supported or disabled in your browser.
             There is no chance of this working.</p></noscript>
-        <p id="results">
-        </p>
+        <p id="supported"></p>
+        <p id="document"></p>
+        <p id="window"></p>
 
         <script nomodule>
-            document.getElementById('results').innerText = 'Modules not supported';
+            document.getElementById('supported').innerText = 'Modules not supported';
         </script>
 
         <script type="module">
-            document.getElementById('results').innerText = 'Modules supported';
+            document.getElementById('supported').innerText = 'Modules supported';
+
+            import { has_document, has_window } from '/js/available-in-module.js';
+
+            var d = document.getElementById('document')
+            if (has_document()) {
+                d.innerText = 'Document available in modules';
+            }
+
+            var w = document.getElementById('window')
+            if (has_window()) {
+                w.innerText = 'Window available in modules';
+            }
         </script>
     </body>
 </html>
