@@ -16,3 +16,11 @@ export function has_window() {
         return false;
     }
 }
+
+export function get_junk_from_window() {
+    return window.junk
+}
+
+export function get_junk_from_document() {
+    return document.junk
+}

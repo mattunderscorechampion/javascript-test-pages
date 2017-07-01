@@ -30,16 +30,38 @@
         <script type="module">
             document.getElementById('supported').innerText = 'Modules supported';
 
-            import { has_document, has_window } from './js/available-in-module.js';
+            import * as m from './js/available-in-module.js';
 
             var d = document.getElementById('document')
-            if (has_document()) {
+            if (m.has_document()) {
                 d.innerText = 'Document available in modules';
+
+                var document_junk = {};
+                document.junk = document_junk;
+
+                var imported_document_junk = m.get_junk_from_document();
+                if (imported_document_junk === document_junk) {
+                    d.innerText += ' and is shared between different modules';
+                }
+                else {
+                    d.innerText += ' and is distinct between different modules';
+                }
             }
 
             var w = document.getElementById('window')
-            if (has_window()) {
+            if (m.has_window()) {
                 w.innerText = 'Window available in modules';
+
+                var window_junk = {};
+                window.junk = window_junk;
+
+                var imported_window_junk = m.get_junk_from_window();
+                if (imported_window_junk === window_junk) {
+                    w.innerText += ' and is shared between different modules';
+                }
+                else {
+                    w.innerText += ' and is distinct between different modules';
+                }
             }
         </script>
     </body>
