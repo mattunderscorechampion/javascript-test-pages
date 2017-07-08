@@ -3,6 +3,8 @@
         <title>Modules test page</title>
         <meta name="description" content="Test how your browser handles JavaScript modules." />
         <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents-hi-sd-ce.js"></script>
     </head>
     <body>
         <p><a href=".." title="Test pages">&lt;&lt; Test pages</a></p>
@@ -14,6 +16,14 @@
             and functions that are exported by a module can be imported by
             another.
         </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using modules">&lt;script type="module">
+    // Import a relative URL as a JS module
+    import * as m from './js/a-module.js';
+    // Log the module object to the console
+    console.log(m);
+&lt;/script>
+</x-listing>
         <h2>Results</h2>
         <noscript>
             <p>
