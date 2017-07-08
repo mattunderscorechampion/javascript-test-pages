@@ -3,6 +3,8 @@
         <title>Async/Await test page</title>
         <meta name="description" content="Test how your browser handles the async and await keywords defined in ES2017." />
         <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents-hi-sd-ce.js"></script>
     </head>
     <body>
         <p><a href=".." title="Test pages">&lt;&lt; Test pages</a></p>
@@ -17,6 +19,19 @@
             keyword and a reject value is thrown. Together these keywords allow
             asynchronous code to be written as though it was synchronous.
         </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using async/wait">
+async function getData() {
+    // Returned as a promise
+    return 'Hello world';
+}
+
+async function handleData() {
+    // Function execution suspends when a pending promise is awaited on
+    var data = await getData();
+    // Then resumes when the promise resolves
+    console.log(data);
+}</x-listing>
         <h2>Results</h2>
         <noscript><p>JavaScript is not supported or disabled in your browser.
             There is no chance of this working.</p></noscript>
