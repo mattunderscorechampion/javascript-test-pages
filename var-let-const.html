@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Var, let and const</title>
+        <meta name="description" content="Test how your browser handles the var, let and const keywords." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Var, let and const</h1>
+        <p>
+            This page tests how your browser handles different ways JavaScript can declare symbols.
+            The var keyword has always been supported, it defines a function scoped, mutable symbol.
+            The let keyword was defined in ES2015, it defines a block scoped, mutable symbol.
+            The const keyword was defined in ES2015, it defines a block scoped, immutable symbol.
+            Only symbols defined by the var keyword can be redefined.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using var, let and const">var x = 'The let keyword defines defines a function scoped symbol';
+let y = 'The let keyword defines defines a block scoped symbol';
+const z = 'The const keyword defines defines a block scoped symbol that cannot be reassigned or redefined';</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <p id="var-result"><p>
+        <p id="let-result"><p>
+        <p id="const-result"><p>
+
+        <script>
+            var x = '';
+            document.getElementById('var-result').innerText =
+                'The var keyword is supported';
+            document.getElementById('let-result').innerText =
+                'The let keyword is not supported.';
+            document.getElementById('const-result').innerText =
+                'The const keyword is not supported.';
+        </script>
+
+        <script>
+            let y = '';
+            document.getElementById('let-result').innerText =
+                'The let keyword is supported.';
+        </script>
+
+        <script>
+            let z = '';
+            document.getElementById('const-result').innerText =
+                'The const keyword is supported.';
+        </script>
+    </body>
+</html>
