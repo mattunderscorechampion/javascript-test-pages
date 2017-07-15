@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Web components</title>
+        <meta name="description" content="Test if your browser supports web components." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Web components</h1>
+        <p>
+            Web components provide a way to create reusable
+            widgets that can be used on webpages. Browsers
+            provide several distinct features to support
+            them. Custom elements allows a component to
+            declare its own HTML elements, these can be
+            used in markup to include the component.
+            Shadow DOM encapsulates DOM and CSS, it allows
+            the components to be described in HTML separate
+            from the rest of the document.  HTML templates
+            provide a way to include an HTML fragment that
+            is not rendered in the document, it can be
+            used to define the component. HTML imports
+            provide a way to package web components.
+        </p>
+        <p>
+            There is a lot to know about web components.
+            Rather than explaining all about them here
+            you should check out some other
+            <a href="https://www.webcomponents.org/introduction" title="web components">sources</a>.
+        </p>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <p id="custom-elements"><p>
+        <p id="shadow-dom"><p>
+        <p id="html-templates"><p>
+        <p id="html-imports"><p>
+
+        <script>
+            var customPara = document.getElementById('custom-elements');
+            if (window.customElements) {
+                customPara.innerText = 'You browser supports custom elements.';
+            }
+            else {
+                customPara.innerText = 'You browser does not support custom elements.';
+            }
+
+            var shadowPara = document.getElementById('shadow-dom');
+            if (shadowPara.attachShadow) {
+                shadowPara.innerText = 'You browser supports shadow DOM.';
+            }
+            else {
+                shadowPara.innerText = 'You browser does not support shadow DOM.';
+            }
+
+            var templatesPara = document.getElementById('html-templates');
+            if (window.HTMLTemplateElement) {
+                templatesPara.innerText = 'You browser supports HTML templates.';
+            }
+            else {
+                templatesPara.innerText = 'You browser does not support HTML templates.';
+            }
+
+            var importsPara = document.getElementById('html-imports');
+            if ('import' in document.createElement('link')) {
+                importsPara.innerText = 'You browser supports HTML imports.';
+            }
+            else {
+                importsPara.innerText = 'You browser does not support HTML imports.';
+            }
+        </script>
+    </body>
+</html>
