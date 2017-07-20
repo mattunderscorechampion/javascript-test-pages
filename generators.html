@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Async/Await test page</title>
+        <meta name="description" content="Test how your browser handles generator functions defined in ES2015." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Generators</h1>
+        <p>
+            Generators can be used to lazily create sequences of values. Even
+            infinite sequences. Generator functions are functions that can
+            return values and then be reentered and resume from where the
+            execution left off.
+        </p>
+        <p>
+            The yield keyword returns a value and becomes the resumption point.
+            The return keyword returns a value and finishes the generator. The
+            generator returns an iterator that can be used to reenter the
+            generator.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using generators">
+function* supplier() {
+    var i = 0;
+    while (true) {
+        yield i++;
+    }
+}
+
+var iter = supplier();
+
+var {value: val0, done: done0} = iter.next();
+var {value: val1, done: done1} = iter.next();</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="script-error"></div>
+        <div id="results" style="display: none;">
+            <p>Generators are supported in your browser.</p>
+        </div>
+
+        <script>
+            // Set text indicating that async is not supported
+            document.getElementById('script-error').innerHTML =
+                '<p>The script could not be parsed, generators not ' +
+                'supported.</p>';
+        </script>
+
+        <script>
+            function* supplier() {
+                var i = 0;
+                while (true) {
+                    yield i++;
+                }
+            }
+
+            var iter = supplier();
+
+            if (iter.next().value !== 0 &&
+                iter.next().value !== 1 &&
+                iter.next().value !== 2) {
+                throw new Error('Wrong values');
+            }
+
+            // Clear the text indicating that async is not supported
+            document.getElementById('script-error').innerHTML = '';
+            document.getElementById('results').style.display = 'block';
+        </script>
+    </body>
+</html>
