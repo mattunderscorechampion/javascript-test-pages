@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Destructuring test page</title>
+        <meta name="description" content="Test how your browser handles destructuring defined in ES2015." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Destructuring</h1>
+        <p>
+            Destructuring is a away take apart complex objects. Arrays and
+            objects can be destructured to access the values they contain.
+        </p>
+        <h2>Examples</h2>
+        <x-listing data-caption="Array destructuring">// Assign 'x' to a and 'y' to b
+var [a, b] = ['x', 'y'];
+// Assign 'x' to c and 'y' to d
+var [c ,, d] = ['x', 5, 'y'];
+// Assign 'x' to e and 'y' to f
+var [e, f = 'y'] = ['x'];</x-listing>
+        <x-listing data-caption="Object destructuring">// Assign 'x' to a and 'y' to b
+var {a, b} = {a: 'x', b: 'y'};
+// Assign 'x' to c and 'y' to d
+var {c: t, d: v} = {c: 'x', d: 'y'};
+// Assign 'x' to e and 'y' to f
+var {e, f = 'y'} = {e: 'x'};</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <p id="arrays">
+        </p>
+        <p id="objects">
+        </p>
+
+        <script>
+            document.getElementById('arrays').innerHTML =
+                '<p>The script could not be parsed, array destructuring not ' +
+                'supported.</p>';
+            document.getElementById('objects').innerHTML =
+                '<p>The script could not be parsed, object destructuring not ' +
+                'supported.</p>';
+        </script>
+
+        <script>
+            var [a, b] = ['x', 'y'];
+            document.getElementById('arrays').innerHTML = 'Array destructuring supported.';
+        </script>
+        <script>
+            var [a ,, b] = ['x', 5, 'y'];
+            document.getElementById('arrays').innerHTML += ' Skipping values supported.';
+        </script>
+        <script>
+            var [a, b = 'y'] = ['x'];
+            document.getElementById('arrays').innerHTML += ' You can provide default values.';
+        </script>
+        <script>
+            var {a, b} = {a: 'x', b: 'y'};
+            document.getElementById('objects').innerHTML = 'Object destructuring supported.';
+        </script>
+        <script>
+            var {a: t, b: v} = {a: 'x', b: 'y'};
+            document.getElementById('objects').innerHTML += ' You can provide alternative names.';
+        </script>
+        <script>
+            var {a, b = 'y'} = {a: 'x'};
+            document.getElementById('objects').innerHTML += ' You can provide default values.';
+        </script>
+    </body>
+</html>
