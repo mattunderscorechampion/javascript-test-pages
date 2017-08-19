@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Promises test page</title>
+        <meta name="description" content="Test how your browser handles promises." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Promises test page</h1>
+        <p>
+            This page tests how your browser handles the
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" title="promises">promises</a>
+            defined in ES2015. Promises represent the eventual completion of an asynchronous task.
+        </p>
+        <x-listing data-caption="Using promises">new Promise(function(resolve, reject) {
+    // A function passed to a promise is called with two parameters.
+    // The first parameter is a function to resolve the promise to a value.
+    // The second parameter is a function to reject the promise with an error.
+})
+.then(function (value) {
+    // Additional work can be chained when a promise is resolved.
+})
+.catch(function (err) {
+    // Errors can be caught when a promise is rejected.
+})
+.then(function (value) {
+    // After catching errors further work can be chanined.
+});</x-listing>
+        <noscript><p>JavaScript is not supported or disabled in your browser. There is no chance of this working.</p></noscript>
+        <div id="script-error"></div>
+        <p id="script-result">
+        </p>
+
+        <script>
+            document.getElementById('script-error').innerHTML = '<p>The script could not be parsed, promises not supported.</p>';
+        </script>
+
+        <script>
+            document.getElementById('script-error').innerHTML = '';
+
+            var scriptResult = document.getElementById('script-result');
+            scriptResult.innerText = 'Promises can be created.';
+
+            var p = new Promise(function (resolve, reject) {
+                resolve('resolved');
+            });
+
+            if (p.then) {
+                p
+                    .then(function (value) { return value === 'resolved'; })
+                    .then(function (value) {
+                        scriptResult.innerText += ' Promises can be chained with more work.';
+                    });
+            }
+
+            if (p.catch) {
+                p
+                    .then(function (value) { throw new Error('Error'); })
+                    .catch(function (err) {
+                        scriptResult.innerText += ' Errors in promises can be recovered from.';
+                    });
+            }
+        </script>
+    </body>
+</html>
