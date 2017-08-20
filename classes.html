@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Classes test page</title>
+        <meta name="description" content="Test how your browser handles classes." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Classes test page</h1>
+        <p>
+            This page tests how your browser handles the
+            <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes" title="classes">classes</a>
+            defined in ES2015. Classes provide a new way to create objects and handle prototype-based inheritance.
+        </p>
+        <x-listing data-caption="Using classes">class Circle {
+    constructor(x_pos, y_pos, radius) {
+        this.x_pos = x_pos;
+        this.y_pos = y_pos;
+        this.radius = radius;
+    }
+
+    get area() {
+      return Math.PI * this.radius * this.radius;
+    }
+}</x-listing>
+        <noscript><p>JavaScript is not supported or disabled in your browser. There is no chance of this working.</p></noscript>
+        <div id="script-error"></div>
+        <p id="script-result">
+        </p>
+
+        <script>
+            document.getElementById('script-error').innerHTML = '<p>The script could not be parsed, classes not supported.</p>';
+        </script>
+
+        <script>
+            document.getElementById('script-error').innerHTML = '';
+
+            var scriptResult = document.getElementById('script-result');
+            scriptResult.innerText = 'Classes are supported in you browser.';
+
+            class Circle {
+                constructor(x_pos, y_pos, radius) {
+                    this.x_pos = x_pos;
+                    this.y_pos = y_pos;
+                    this.radius = radius;
+                }
+
+                get area() {
+                  return Math.PI * this.radius * this.radius;
+                }
+            }
+
+            const cir = new Circle(0, 0, 1);
+
+            if (cir.radius === 1) {
+                scriptResult.innerText += ' Class fields are accessible.';
+            }
+
+            if (cir.area === Math.PI) {
+                scriptResult.innerText += ' Classes support properties.';
+            }
+        </script>
+    </body>
+</html>
