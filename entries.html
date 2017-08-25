@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Entries test page</title>
+        <meta name="description" content="Test how your browser handles entries, keys and values." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Entries test page</h1>
+        <p>
+            This page tests how your browser handles entries, keys and values
+            defined in ES2015 and ES2017. Object has several functions form
+            accessing the properties of an object. The keys function was
+            introduce in ES2015, it returns an array of the property names.
+            The values function was introduce in ES2017, it returns an array of
+            the property values. The entries function was introduce in ES2017,
+            it returns an array of the pairs of property keys and values.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using entries">const obj = {
+    prop: 'hello'
+};
+Object.keys(obj); // returns an array containing the string 'prop'
+Object.values(obj); // returns an array containing the string 'hello'
+Object.entries(obj); // returns an array containing the array ['prop', 'hello']
+</x-listing>
+        <h2>Results</h2>
+        <noscript>
+            <p>
+                JavaScript is not supported or disabled in your browser.
+                There is no chance of this working.
+            </p>
+        </noscript>
+        <p id="result"></p>
+
+        <script>
+            var result = document.getElementById('result');
+            if (Object.keys) {
+                result.innerText += ' The Object.keys function is supported.';
+            }
+            if (Object.values) {
+                result.innerText += ' The Object.values function is supported.';
+            }
+            if (Object.entries) {
+                result.innerText += ' The Object.entries function is supported.';
+            }
+        </script>
+    </body>
+</html>
