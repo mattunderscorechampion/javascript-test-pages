@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <title>Entries test page</title>
+        <meta name="description" content="Test how your browser handles trailing commas." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Trailing commas test page</h1>
+        <p>
+            This page tests how your browser handles trailing commas defined in
+            ES2017. Trailing commas are now allowed in object and array
+            literals; parameter definitions and function calls. This is a
+            relaxation of the syntax rules.
+        </p>
+        <p>
+            Trailing commas have no effect on the semantics. So what are they
+            for? They make maintaining code very slightly easier, in a few
+            cases. They make it easier to reorder comma separated entries and
+            make it easier for diff tools to identify the interesting changes.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using trailing commas">// Object literal with trailing comma
+const obj = {
+    'foo': 'bar',
+    'bar': 'foo',
+};
+
+// Array literal with trailing comma
+const arr = [
+    10,
+    20,
+    30,
+];
+
+// Parameter with trailing comma
+function foo(bar,) {
+}
+
+// Function call with trailing comma
+foo('bar',);</x-listing>
+        <h2>Results</h2>
+        <noscript>
+            <p>
+                JavaScript is not supported or disabled in your browser.
+                There is no chance of this working.
+            </p>
+        </noscript>
+        <p id="result"></p>
+
+        <script>
+            window.trailing = {
+                obj: false,
+                arr: false,
+                param: false,
+                call: false
+            };
+        </script>
+
+        <script>
+            var obj = {
+                'foo': 'bar',
+                'bar': 'foo',
+            };
+
+            window.trailing.obj = true;
+        </script>
+
+        <script>
+            var arr = {
+                10,
+                20,
+            };
+
+            window.trailing.arr = true;
+        </script>
+
+        <script>
+            function foo(bar,) {
+            }
+
+            window.trailing.param = true;
+        </script>
+
+        <script>
+            function foo(bar) {
+            }
+
+            foo('bar',);
+
+            window.trailing.call = true;
+        </script>
+
+        <script>
+            var result = document.getElementById('result');
+            if (window.trailing.obj) {
+                result.innerHTML += ' Object literals support trailing commas.';
+            }
+            else {
+                result.innerHTML += ' Object literals do not support trailing commas.';
+            }
+            if (window.trailing.arr) {
+                result.innerHTML += ' Array literals support trailing commas.';
+            }
+            else {
+                result.innerHTML += ' Array literals do not support trailing commas.';
+            }
+            if (window.trailing.param) {
+                result.innerHTML += ' Parameter declarations support trailing commas.';
+            }
+            else {
+                result.innerHTML += ' Parameter declarations do not support trailing commas.';
+            }
+            if (window.trailing.call) {
+                result.innerHTML += ' Function calls support trailing commas.';
+            }
+            else {
+                result.innerHTML += ' Function calls do not support trailing commas.';
+            }
+
+            if (window.trailing.obj && window.trailing.arr && window.trailing.param && window.trailing.call) {
+                result.innerHTML = 'Object literals not supported.';
+            }
+        </script>
+    </body>
+</html>
