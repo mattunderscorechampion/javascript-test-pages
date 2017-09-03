@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <title>Bind, call and apply</title>
+        <meta name="description" content="Test how your browser handles bind, call and apply." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Bind, call and apply</h1>
+        <p>
+            Test how your browser handles bind, call and apply.
+            Bind, call and apply allow you to modify the way you can call a
+            function. Bind allows you to curry a function. It returns a new
+            function with fewer parameters and different this value. Call and
+            apply invoke the function with specfic parameters and a different
+            this value. The call function accepts the parameters as it's
+            parameter list. The apply function accepts the parameters as an
+            array.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using bind, call and apply">// A function that joins strings with a separator
+function join() {
+    var r = this;
+    if (typeof r === 'object' &amp;&amp; r instanceof String) {
+        r = r.valueOf();
+    }
+    if (typeof r !== 'string') {
+        r = '';
+    }
+
+    if (arguments.length >= 2) {
+        var sep = arguments[0];
+        var i = 1;
+        while (i < arguments.length) {
+            if (r !== '') {
+                r += sep;
+            }
+            r += arguments[i];
+            i++;
+        }
+    }
+    return r;
+}
+
+// All expressions return 'a,b'
+join.bind('a', ',', 'b')();
+join.call('a', ',', 'b');
+join.apply('a', [',', 'b']);</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <p id="bind-result"><p>
+        <p id="call-result"><p>
+        <p id="apply-result"><p>
+
+        <script>
+            (function () {
+                var obj = {};
+
+                function test(param) {
+                    return [this, param];
+                }
+
+                var f = test.bind(obj, 5);
+
+                var res = f();
+
+                if (res && res.length === 2) {
+                    if (res[0] === obj) {
+                        document.getElementById('bind-result').innerText += ' Bind can set the this value seen by the function.';
+                    }
+                    else {
+                        document.getElementById('bind-result').innerText += ' Bind cannot set the this value seen by the function.';
+                    }
+                    if (res[1] === 5) {
+                        document.getElementById('bind-result').innerText += ' Bind can set the parameters seen by the function.';
+                    }
+                    else {
+                        document.getElementById('bind-result').innerText += ' Bind cannot set the parameters seen by the function.';
+                    }
+                }
+                else {
+                    document.getElementById('bind-result').innerText += ' Bind cannot set the this value or the parameters seen by the function.';
+                }
+            }());
+        </script>
+
+        <script>
+            (function () {
+                var obj = {};
+
+                function test(param) {
+                    return [this, param];
+                }
+
+                var res = test.call(obj, 5);
+
+                if (res && res.length === 2) {
+                    if (res[0] === obj) {
+                        document.getElementById('call-result').innerText += ' Call can set the this value seen by the function.';
+                    }
+                    else {
+                        document.getElementById('call-result').innerText += ' Call cannot set the this value seen by the function.';
+                    }
+                    if (res[1] === 5) {
+                        document.getElementById('call-result').innerText += ' Call can set the parameters seen by the function.';
+                    }
+                    else {
+                        document.getElementById('call-result').innerText += ' Call cannot set the parameters seen by the function.';
+                    }
+                }
+                else {
+                    document.getElementById('call-result').innerText += ' Call cannot set the this value or the parameters seen by the function.';
+                }
+            }());
+        </script>
+
+        <script>
+            (function () {
+                var obj = {};
+
+                function test(param) {
+                    return [this, param];
+                }
+
+                var res = test.apply(obj, [5]);
+
+                if (res && res.length === 2) {
+                    if (res[0] === obj) {
+                        document.getElementById('apply-result').innerText += ' Apply can set the this value seen by the function.';
+                    }
+                    else {
+                        document.getElementById('apply-result').innerText += ' Apply cannot set the this value seen by the function.';
+                    }
+                    if (res[1] === 5) {
+                        document.getElementById('apply-result').innerText += ' Apply can set the parameters seen by the function.';
+                    }
+                    else {
+                        document.getElementById('apply-result').innerText += ' Apply cannot set the parameters seen by the function.';
+                    }
+                }
+                else {
+                    document.getElementById('apply-result').innerText += ' Apply cannot set the this value or the parameters seen by the function.';
+                }
+            }());
+        </script>
+    </body>
+</html>
