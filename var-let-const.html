@@ -27,10 +27,19 @@ const z = 'The const keyword defines defines a block scoped symbol that cannot b
         <p id="let-result"><p>
         <p id="const-result"><p>
 
+            <script>
+                document.getElementById('var-result').innerText =
+                    'The var keyword is not supported.';
+                document.getElementById('let-result').innerText =
+                    'The let keyword is not supported.';
+                document.getElementById('const-result').innerText =
+                    'The const keyword is not supported.';
+            </script>
+
         <script>
             var x = '';
             document.getElementById('var-result').innerText =
-                'The var keyword is supported';
+                'The var keyword is supported.';
             document.getElementById('let-result').innerText =
                 'The let keyword is not supported.';
             document.getElementById('const-result').innerText =
@@ -44,7 +53,7 @@ const z = 'The const keyword defines defines a block scoped symbol that cannot b
         </script>
 
         <script>
-            let z = '';
+            const z = '';
             document.getElementById('const-result').innerText =
                 'The const keyword is supported.';
         </script>
