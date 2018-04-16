@@ -27,6 +27,9 @@
 })
 .then(function (value) {
     // After catching errors further work can be chanined.
+})
+.finally(function () {
+    // Further work can be done if the promise is resolved or rejected.
 });</x-listing>
         <noscript><p>JavaScript is not supported or disabled in your browser. There is no chance of this working.</p></noscript>
         <div id="script-error"></div>
@@ -62,6 +65,20 @@
                         scriptResult.innerText += ' Errors in promises can be recovered from.';
                     });
             }
+
+            if (p.finally) {
+                p
+                    .then(function () {})
+                    .finally(function () {
+                        scriptResult.innerText += ' Promises support the finally function that ' +
+                            'allows code to run if the promise is resolved or rejected.';
+                    });
+            }
+            else {
+                scriptResult.innerText += ' Your browser does not support the finally function' +
+                    ' that allows code to run if the promise is resolved or rejected.';
+            }
+
         </script>
     </body>
 </html>
