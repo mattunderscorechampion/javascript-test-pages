@@ -65,6 +65,10 @@
                         scriptResult.innerText += ' Errors in promises can be recovered from.';
                     });
             }
+            else {
+                scriptResult.innerText += ' Your browser does not support the catch function' +
+                    ' that recovers from errors in promises.';
+            }
 
             if (p.finally) {
                 p
