@@ -25,7 +25,9 @@ var {a, b} = {a: 'x', b: 'y'};
 // Assign 'x' to c and 'y' to d
 var {c: t, d: v} = {c: 'x', d: 'y'};
 // Assign 'x' to e and 'y' to f
-var {e, f = 'y'} = {e: 'x'};</x-listing>
+var {e, f = 'y'} = {e: 'x'};
+// Assign 'x' to g and '{h: "y", i: "z"}' to h
+var {g, ...h} = {g: 'x', h: 'y', i: 'z'}</x-listing>
         <h2>Results</h2>
         <noscript><p>JavaScript is not supported or disabled in your browser.
             There is no chance of this working.</p></noscript>
@@ -66,6 +68,10 @@ var {e, f = 'y'} = {e: 'x'};</x-listing>
         <script>
             var {a, b = 'y'} = {a: 'x'};
             document.getElementById('objects').innerHTML += ' You can provide default values.';
+        </script>
+        <script>
+            var {g, ...h} = {g: 'x', h: 'y', i: 'z'};
+            document.getElementById('objects').innerHTML += ' You can use the spread operator to collect remaining values.';
         </script>
     </body>
 </html>
