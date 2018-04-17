@@ -1,0 +1,184 @@
+<html>
+<head>
+    <title>Modules test page</title>
+    <meta name="description" content="Test how your browser handles WebGL." />
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="js/gl-matrix.js"></script>
+</head>
+<body>
+<p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+<h1>Web GL test page</h1>
+<p>
+    This page tests how your browser handles WebGL. WebGL is an API for rendering 2D and
+    3D interactive graphics within you browser. WebGL is a low level API and I'm not
+    going to go into any detail. Take a look at
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL">MDN's getting started guide</a>
+    for more information. The example used on this page is taken from there. The example
+    also depends on <a href="http://glmatrix.net/">glMartix</a>, a library for vector and
+    matrix operations.
+</p>
+<h2>Results</h2>
+<noscript>
+    <p>
+        JavaScript is not supported or disabled in your browser.
+        There is no chance of this working.
+    </p>
+</noscript>
+<p>
+    <canvas id="gl-area" width="640" height="480" />
+</p>
+<p id="supported"></p>
+
+<script>
+    var results = document.getElementById('supported');
+    var canvas = document.getElementById('gl-area');
+    var gl = canvas.getContext("webgl");
+
+    var vsSource = `
+        attribute vec4 aVertexPosition;
+
+        uniform mat4 uModelViewMatrix;
+        uniform mat4 uProjectionMatrix;
+
+        void main() {
+          gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+        }`;
+
+    var fsSource = `
+        void main() {
+          gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }`;
+
+    function initShaderProgram() {
+        var vertexShader = loadShader(gl.VERTEX_SHADER, vsSource);
+        var fragmentShader = loadShader(gl.FRAGMENT_SHADER, fsSource);
+        var shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+        if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+            results.innerText += 'Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram);
+            return null;
+        }
+
+        return shaderProgram;
+    }
+
+    function loadShader(type, source) {
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            results.innerText += 'An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader);
+            gl.deleteShader(shader);
+            return null;
+        }
+
+        return shader;
+    }
+
+    function initBuffers() {
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        var positions = [
+            1.0,  1.0,
+            -1.0,  1.0,
+            1.0, -1.0,
+            -1.0, -1.0,
+        ];
+        gl.bufferData(gl.ARRAY_BUFFER,
+            new Float32Array(positions),
+            gl.STATIC_DRAW);
+
+        return {
+            position: positionBuffer,
+        };
+    }
+
+    function drawScene(programInfo, buffers) {
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clearDepth(1.0);
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        const fieldOfView = 45 * Math.PI / 180;
+        const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+        const zNear = 0.1;
+        const zFar = 100.0;
+        const projectionMatrix = mat4.create();
+
+        mat4.perspective(projectionMatrix,
+            fieldOfView,
+            aspect,
+            zNear,
+            zFar);
+
+        const modelViewMatrix = mat4.create();
+
+        mat4.translate(modelViewMatrix,
+            modelViewMatrix,
+            [-0.0, 0.0, -6.0]);
+
+        {
+            const numComponents = 2;
+            const type = gl.FLOAT;
+            const normalize = false;
+            const stride = 0;
+
+            const offset = 0;
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+            gl.vertexAttribPointer(
+                programInfo.attribLocations.vertexPosition,
+                numComponents,
+                type,
+                normalize,
+                stride,
+                offset);
+            gl.enableVertexAttribArray(
+                programInfo.attribLocations.vertexPosition);
+        }
+
+        gl.useProgram(programInfo.program);
+        gl.uniformMatrix4fv(
+            programInfo.uniformLocations.projectionMatrix,
+            false,
+            projectionMatrix);
+        gl.uniformMatrix4fv(
+            programInfo.uniformLocations.modelViewMatrix,
+            false,
+            modelViewMatrix);
+
+        {
+            const offset = 0;
+            const vertexCount = 4;
+            gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
+        }
+    }
+
+    if (!gl) {
+        results.innerText = 'WebGL not supported. No context found for the canvas.';
+    }
+    else {
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        results.innerText = 'WebGL supported. WebGL context found for the canvas. If you see a white square in a black space everything works.';
+
+        var shaderProgram = initShaderProgram();
+        drawScene(
+            {
+                program: shaderProgram,
+                attribLocations: {
+                    vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+                },
+                uniformLocations: {
+                    projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+                    modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+                },
+            },
+            initBuffers());
+    }
+</script>
+</body>
+</html>
