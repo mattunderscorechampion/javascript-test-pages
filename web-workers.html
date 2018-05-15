@@ -15,6 +15,9 @@
             Web workers allow you to execute JavaScript code concurrently.
             Each web worker represents a new thread running a separate event loop.
             You can exchange messages between the web workers you create.
+            Messages are usually exchanged by copy but certain data structures can be
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Transferable" title="transferable">transferred</a>
+            without copying.
         </p>
         <h2>Example</h2>
         <x-listing data-caption="Creating web workers">var w = new Worker('js/test-workers.js');
@@ -41,6 +44,7 @@ self.addEventListener('message', function (msg) {
                 result.innerText += 'Web workers are available in your browser.';
 
                 var w = new Worker('js/test-workers.js');
+                var buffer = null;
                 w.addEventListener('message', function (msg) {
                     if (msg.data === 0) {
                         result.innerText += ' You can receive messages from web workers.';
@@ -48,8 +52,17 @@ self.addEventListener('message', function (msg) {
                     else if (msg.data === 1) {
                         result.innerText += ' You can send messages to web workers.';
                     }
+                    else if (msg.data === 3 && buffer !== null && buffer.byteLength === 0) {
+                        result.innerText += ' You can transfer ownership of certain data types between workers.';
+                    }
                 });
                 w.postMessage('Hello');
+                if (window.ArrayBuffer) {
+                    buffer = new ArrayBuffer(4);
+                    var view = new Int32Array(buffer);
+                    view[0] = 2;
+                    w.postMessage(buffer, [buffer]);
+                }
             }
             else {
                 result.innerText += 'Web workers are not supported in your browser.';
