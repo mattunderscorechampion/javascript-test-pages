@@ -48,22 +48,22 @@ self.addEventListener('message', function (msg) {
                 <tr>
                     <td>Web workers</td>
                     <td>The ability to create web workers that can execute code in a separate thread.</td>
-                    <td id="workers">&#x1f61e;</td>
+                    <td id="workers" title="Failure">&#x1f61e;</td>
                 </tr>
                 <tr>
                     <td>Send message to worker</td>
                     <td>The ability to send messages to a worker from its creator.</td>
-                    <td id="passing-to">&#x1f61e;</td>
+                    <td id="passing-to" title="Failure">&#x1f61e;</td>
                 </tr>
                 <tr>
                     <td>Send message from worker</td>
                     <td>The ability to send messages from a worker to its creator.</td>
-                    <td id="passing-from">&#x1f61e;</td>
+                    <td id="passing-from" title="Failure">&#x1f61e;</td>
                 </tr>
                 <tr>
                     <td>Ownership transfer</td>
                     <td>The ability to transfer ownership of ArrayBuffers and certain other types between threads.</td>
-                    <td id="transfer">&#x1f61e;</td>
+                    <td id="transfer" title="Failure">&#x1f61e;</td>
                 </tr>
             </tbody>
         </table>
@@ -71,6 +71,7 @@ self.addEventListener('message', function (msg) {
             if (window.Worker) {
                 var workers = document.getElementById('workers');
                 workers.innerHTML = '&#x1f642;';
+                workers.setAttribute('title', 'Success');
 
                 var w = new Worker('js/test-workers.js');
                 var buffer = null;
@@ -78,14 +79,17 @@ self.addEventListener('message', function (msg) {
                     if (msg.data === 0) {
                         var passingTo = document.getElementById('passing-to');
                         passingTo.innerHTML = '&#x1f642;';
+                        passingTo.setAttribute('title', 'Success');
                     }
                     else if (msg.data === 1) {
                         var passingFrom = document.getElementById('passing-from');
                         passingFrom.innerHTML = '&#x1f642;';
+                        passingFrom.setAttribute('title', 'Success');
                     }
                     else if (msg.data === 3 && buffer !== null && buffer.byteLength === 0) {
                         var transfer = document.getElementById('transfer');
                         transfer.innerHTML = '&#x1f642;';
+                        transfer.setAttribute('title', 'Success');
                     }
                 });
                 w.postMessage('Hello');
