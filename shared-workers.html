@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>Shared workers test page</title>
+        <meta name="description" content="Test how your browser handles shared workers."/>
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Shared workers test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker" title="shared workers">shared workers</a>.
+            Shared workers, like <a href="web-workers.html" title="web workers">web workers</a>,
+            allow you to execute JavaScript code concurrently.
+            Unlike web workers multiple contexts, like frames or tabs, can connect to the same
+            shared worker instance instead of creating their own instances.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Creating shared workers">var w = new SharedWorker('js/test-workers.js');
+w.port.addEventListener('message', function (msg) {
+    ...
+});
+w.port.start();
+w.port.postMessage('Hello');</x-listing>
+        <x-listing data-caption="Writing shared workers">self.addEventListener('connect', function (e) {
+    var port = e.ports[0];
+    port.addEventListener('message', function(msg) {
+        ...
+    });
+});</x-listing>
+        <h2>Results</h2>
+        <noscript>
+            <p>
+                JavaScript is not supported or disabled in your browser.
+                There is no chance of this working.
+            </p>
+        </noscript>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                    <th>Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Shared workers</td>
+                    <td>The ability to create shared workers that can execute code in a separate thread.</td>
+                    <td id="workers" title="Failure">&#x1f61e;</td>
+                </tr>
+                <tr>
+                    <td>Connect to worker</td>
+                    <td>The ability to connect to a worker.</td>
+                    <td id="connected" title="Failure">&#x1f61e;</td>
+                </tr>
+                <tr>
+                    <td>Send message from worker</td>
+                    <td>The ability to send messages from a worker.</td>
+                    <td id="shared-from" title="Failure">&#x1f61e;</td>
+                </tr>
+                <tr>
+                    <td>Send message to worker</td>
+                    <td>The ability to send messages to a worker.</td>
+                    <td id="shared-to" title="Failure">&#x1f61e;</td>
+                </tr>
+                <tr>
+                    <td>Connect multiple frames</td>
+                    <td>The ability to connect multiple frames to the same worker.</td>
+                    <td id="multiple-frames" title="Failure">&#x1f61e;</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="placeholder"></div>
+        <script>
+            if (window.SharedWorker) {
+                var workers = document.getElementById('workers');
+                workers.innerHTML = '&#x1f642;';
+                workers.setAttribute('title', 'Success');
+
+                var w = new SharedWorker('js/test-shared-workers.js');
+                w.port.addEventListener('message', function (msg) {
+                    if (msg.data === 'connected') {
+                        var connected = document.getElementById('connected');
+                        connected.innerHTML = '&#x1f642;';
+                        connected.setAttribute('title', 'Success');
+
+                        var sharedFrom = document.getElementById('shared-from');
+                        sharedFrom.innerHTML = '&#x1f642;';
+                        sharedFrom.setAttribute('title', 'Success');
+                    }
+                    else if (msg.data === 'received-message') {
+                        var sharedTo = document.getElementById('shared-to');
+                        sharedTo.innerHTML = '&#x1f642;';
+                        sharedTo.setAttribute('title', 'Success');
+                    }
+                    else if (msg.data === 'broadcast') {
+                        var multipleFrames = document.getElementById('multiple-frames');
+                        multipleFrames.innerHTML = '&#x1f642;';
+                        multipleFrames.setAttribute('title', 'Success');
+                    }
+                });
+                w.port.start();
+                w.port.postMessage('message');
+
+                var iframe = document.createElement('iframe');
+                iframe.setAttribute('src', 'shared-worker-iframe.html');
+                iframe.setAttribute('style', 'width: 0; height: 0; border: 0;');
+                var placeholder = document.getElementById('placeholder');
+                placeholder.appendChild(iframe);
+            }
+        </script>
+    </body>
+</html>
