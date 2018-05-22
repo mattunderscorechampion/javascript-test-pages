@@ -71,6 +71,11 @@ w.port.postMessage('Hello');</x-listing>
                     <td>The ability to connect multiple frames to the same worker.</td>
                     <td id="multiple-frames" title="Failure">&#x1f61e;</td>
                 </tr>
+                <tr>
+                    <td>Ownership transfer</td>
+                    <td>The ability to transfer ownership of ArrayBuffers and certain other types between threads.</td>
+                    <td id="transfer" title="Failure">&#x1f61e;</td>
+                </tr>
             </tbody>
         </table>
         <div id="placeholder"></div>
@@ -81,6 +86,7 @@ w.port.postMessage('Hello');</x-listing>
                 workers.setAttribute('title', 'Success');
 
                 var w = new SharedWorker('js/test-shared-workers.js');
+                var buffer = null;
                 w.port.addEventListener('message', function (msg) {
                     if (msg.data === 'connected') {
                         var connected = document.getElementById('connected');
@@ -101,6 +107,11 @@ w.port.postMessage('Hello');</x-listing>
                         multipleFrames.innerHTML = '&#x1f642;';
                         multipleFrames.setAttribute('title', 'Success');
                     }
+                    else if (msg.data === 'buffer' && buffer !== null && buffer.byteLength === 0) {
+                        var transfer = document.getElementById('transfer');
+                        transfer.innerHTML = '&#x1f642;';
+                        transfer.setAttribute('title', 'Success');
+                    }
                 });
                 w.port.start();
                 w.port.postMessage('message');
@@ -110,6 +121,13 @@ w.port.postMessage('Hello');</x-listing>
                 iframe.setAttribute('style', 'width: 0; height: 0; border: 0;');
                 var placeholder = document.getElementById('placeholder');
                 placeholder.appendChild(iframe);
+
+                if (window.ArrayBuffer) {
+                    buffer = new ArrayBuffer(4);
+                    var view = new Int32Array(buffer);
+                    view[0] = 2;
+                    w.port.postMessage(buffer, [buffer]);
+                }
             }
         </script>
     </body>
