@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>Arrow functions test page</title>
+        <meta name="description" content="Test how your browser handles arrow functions." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Arrow functions test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">arrow functions</a>.
+            Arrow functions provide a brief syntax for function expressions.
+            Functions defined as arrow functions use the execution context of what encloses them rather then having their own.
+            This makes them very convenient for callbacks.
+            They also do not support <code>arguments</code> or being used as constructors.
+            When only a single parameter or statement is present the parentheses around the
+            arguments or body is optional.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Empty arrow function">setTimeout(() => {}, 5000);</x-listing>
+        <x-listing data-caption="Tidy arrow function">['hello'].map(x => console.log(x));</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="results">
+            <p>
+                <table cellspacing="0">
+                    <tr>
+                        <td>Arrow functions can be called</td>
+                        <td id="result-0">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Parameters can be passed to arrow functions</td>
+                        <td id="result-1">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Arrow functions use the enclosing execution context</td>
+                        <td id="result-2">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Parentheses are optional for single argument arrow functions</td>
+                        <td id="result-3">Failed to parse script</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+
+        <script>
+            (() => {
+                var r = document.getElementById('result-0');
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            })();
+        </script>
+
+        <script>
+            ((x) => {
+                var r = document.getElementById('result-1');
+                if (x === 5) {
+                    r.innerHTML = '&#x1f642;';
+                    r.setAttribute('title', 'Success');
+                }
+                else {
+                    r.innerHTML = '&#x1f61e;';
+                    r.setAttribute('title', 'Failure');
+                }
+            })(5);
+        </script>
+
+        <script>
+            function T() {
+                var self = this;
+                (() => {
+                    var r = document.getElementById('result-2');
+                    if (this === self) {
+                        r.innerHTML = '&#x1f642;';
+                        r.setAttribute('title', 'Success');
+                    }
+                    else {
+                        r.innerHTML = '&#x1f61e;';
+                        r.setAttribute('title', 'Failure');
+                    }
+                })();
+            }
+
+            new T();
+        </script>
+
+        <script>
+            (x => {
+                var r = document.getElementById('result-3');
+                if (x === 5) {
+                    r.innerHTML = '&#x1f642;';
+                    r.setAttribute('title', 'Success');
+                }
+                else {
+                    r.innerHTML = '&#x1f61e;';
+                    r.setAttribute('title', 'Failure');
+                }
+            })(5);
+        </script>
+    </body>
+</html>
