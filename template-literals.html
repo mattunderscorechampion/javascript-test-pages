@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>Template literals test page</title>
+        <meta name="description" content="Test how your browser handles template literals." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Template literals test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literals</a>.
+            Template literals are string literals with embedded expressions.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Simple literal">`a string`</x-listing>
+        <x-listing data-caption="Multiline literal">`a string
+on two lines`</x-listing>
+        <x-listing data-caption="Expression interpolation">var a = 5;
+var b = 10;
+console.log(`${a} + ${b} = ${a + b}`);</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="results">
+            <p>
+                <table cellspacing="0">
+                    <tr>
+                        <th colspan="2">This table shows the support for template literals</th>
+                    </tr>
+                    <tr>
+                        <td>Simple literals</td>
+                        <td id="result-0">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Multiline literals</td>
+                        <td id="result-1">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Expression interpolation</td>
+                        <td id="result-2">Failed to parse script</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+
+        <script>
+            var r = document.getElementById('result-0');
+            if (`a literal` === 'a literal') {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            var r = document.getElementById('result-1');
+            var s0 = `a
+literal`;
+            var s1 = 'a\nliteral';
+            if (s0 === s1) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            var r = document.getElementById('result-2');
+            var a = 5;
+            var b = 10;
+            var s0 = `${a} + ${b} = ${a + b}`;
+            var s1 = '5 + 10 = 15';
+            if (s0 === s1) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+    </body>
+</html>
