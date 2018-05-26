@@ -21,6 +21,28 @@ on two lines`</x-listing>
         <x-listing data-caption="Expression interpolation">var a = 5;
 var b = 10;
 console.log(`${a} + ${b} = ${a + b}`);</x-listing>
+        <x-listing data-caption="Tagged literals">function sorted() {
+    let args = Array.from(arguments);
+    let strings = args.shift();
+    args.sort(function (a, b) {
+        if (typeof a === 'number' && typeof b === 'number') {
+            return a - b;
+        } else {
+            throw new Error('Numbers expected');
+        }
+    });
+    let r = '';
+    strings.forEach(function (s) {
+        if (s) {
+            r += s;
+        }
+        if (args.length > 0) {
+            r += args.shift();
+        }
+    });
+    return r;
+}
+console.log(sorted`a: ${5}, b: ${1}, c: ${9}`);</x-listing>
         <h2>Results</h2>
         <noscript><p>JavaScript is not supported or disabled in your browser.
             There is no chance of this working.</p></noscript>
@@ -41,6 +63,10 @@ console.log(`${a} + ${b} = ${a + b}`);</x-listing>
                     <tr>
                         <td>Expression interpolation</td>
                         <td id="result-2">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Tagged templates</td>
+                        <td id="result-3">Failed to parse script</td>
                     </tr>
                 </table>
             </p>
@@ -79,6 +105,44 @@ literal`;
             var b = 10;
             var s0 = `${a} + ${b} = ${a + b}`;
             var s1 = '5 + 10 = 15';
+            if (s0 === s1) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            function sorted() {
+                var args = Array.from(arguments);
+                var strings = args.shift();
+                args.sort(function (a, b) {
+                    if (typeof a === 'number' && typeof b === 'number') {
+                        return a - b;
+                    }
+                    else {
+                        throw new Error('Numbers expected');
+                    }
+                });
+                var r = '';
+                strings.forEach(function (s) {
+                    if (s) {
+                        r += s;
+                    }
+                    if (args.length > 0) {
+                        r += args.shift();
+                    }
+                });
+                return r;
+            }
+
+            var r = document.getElementById('result-3');
+            var s0 = sorted`a: ${5}, b: ${1}, c: ${9}`;
+            var s1 = 'a: 1, b: 5, c: 9';
+
             if (s0 === s1) {
                 r.innerHTML = '&#x1f642;';
                 r.setAttribute('title', 'Success');
