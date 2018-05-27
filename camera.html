@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Camera test page</title>
+        <meta name="description" content="Test how your browser handles camera access." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Camera test page</h1>
+        <p>
+            This page tests how your browser handles camera access.
+            Web browsers support accessing cameras, web cams, phone cameras, anything connected to your device.
+        </p>
+        <h2>Results</h2>
+        <noscript>
+            <p>
+                JavaScript is not supported or disabled in your browser.
+                There is no chance of this working.
+            </p>
+        </noscript>
+        <div id="video-container"></div>
+        <p id="supported"></p>
+        <script>
+            var supported = document.getElementById('supported');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                supported.innerText += 'Media devices supported.';
+                var constraints = { audio: false, video: true};
+                navigator.getUserMedia(
+                    constraints,
+                    function (stream) {
+                        var videoElement = document.createElement('video');
+                        document.getElementById('video-container').appendChild(videoElement);
+                        videoElement.srcObject = stream;
+                        videoElement.play().then(function () {
+                            supported.innerText += ' Media streams can be forwarded to video elements. What can you see?';
+                        }, function () {
+                            supported.innerText += ' There was a problem forwarding the media stream to video elements.';
+                        });
+                    },
+                    function(error) {
+                        supported.innerText += ' Access to camera denied.';
+                    });
+            }
+            else {
+                supported.innerText += 'No';
+            }
+        </script>
+    </body>
+</html>
