@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Local storage test page</title>
+        <meta name="description" content="Test how your browser handles local storage." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Local storage test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">local storage</a>.
+            Local storage allows you to store data that is associated with the origin of the page.
+            Session storage is an alternative that only lasts for the duration of the session.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using local storage">window.localStorage.setItem('key', 'value');
+window.localStorage.getItem('key');
+window.localStorage.removeItem('key');</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="results">
+            <p>
+                <table cellspacing="0">
+                    <tr>
+                        <td>Local storage</td>
+                        <td id="result-0">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Session storage</td>
+                        <td id="result-1">Failed to parse script</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+
+        <script>
+            var r = document.getElementById('result-0');
+            if (window.localStorage) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            var r = document.getElementById('result-1');
+            if (window.sessionStorage) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+    </body>
+</html>
