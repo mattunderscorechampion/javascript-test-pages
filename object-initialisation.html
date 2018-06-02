@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>Object initialisation test page</title>
+        <meta name="description" content="Test how your browser handles object initialisation." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Object initialisation test page</h1>
+        <p>
+            This page tests how your browser handles object initialisation.
+            JavaScript allows several ways of initialising object.
+            Shorthand property names allow objects to be declared from variables where the name of
+            the variable is the name property and the value of the variable is the value of the
+            property.
+            Shorthand methods allow objects to be declared with methods omitting the function
+            keyword.
+            Computed property names allow the name of the property to be derived from an
+            expression.
+        </p>
+        <h2>Examples</h2>
+        <x-listing data-caption="Shorthand property names">var a = 'x';
+var b = 'y';
+var o = {a, b}; \\ { a: 'x', b: 'y' }</x-listing>
+        <x-listing data-caption="Shorthand method names">var o = {a() { return 'x'; }}; // { a: function a() { return 'x'; } }</x-listing>
+        <x-listing data-caption="Computed property names">var a = 'x';
+var b = 'y';
+var o = {[a] : '0', ['' + b]: '1'}; // { x: '0', y: '1' }</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="results">
+            <p>
+                <table cellspacing="0">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Success</th>
+                    <tr>
+                    <tr>
+                        <td>Shorthand property names</td>
+                        <td id="result-0">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Shorthand method names</td>
+                        <td id="result-1">Failed to parse script</td>
+                    </tr>
+                    <tr>
+                        <td>Computed property names</td>
+                        <td id="result-2">Failed to parse script</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+
+        <script>
+            var a = 'x';
+            var b = 'y';
+            var o = {a, b};
+            var r = document.getElementById('result-0');
+            if (o.a === a && o.b === b) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            var o = {a() { return 'x'; }};
+            var r = document.getElementById('result-1');
+            if (o.a() === 'x') {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            var a = 'x';
+            var b = 'y';
+            var o = {[a] : '0', ['' + b]: '1'};
+            var r = document.getElementById('result-2');
+            if (o.x === '0' && o.y === '1') {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+    </body>
+</html>
