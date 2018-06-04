@@ -1,0 +1,138 @@
+<html>
+    <head>
+        <title>Default parameters test page</title>
+        <meta name="description" content="Test how your browser handles default parameters." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Default parameter values test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters">default parameters</a>.
+            Default parameters allow default values to be provided when no value or undefined is
+            passed to a function.
+        </p>
+        <h2>Examples</h2>
+        <x-listing data-caption="Default parameters">function a_function(x = 5) {
+    ...
+}</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div>
+            <p id="results"></p>
+            <table id="results-table" style="display: none;" cellspacing="0">
+                <tr>
+                    <th>Feature</th>
+                    <th>Success</th>
+                <tr>
+                <tr>
+                    <td>Default parameters</td>
+                    <td id="result-0">Failed to parse script</td>
+                </tr>
+                <tr>
+                    <td>Default value when <code>undefined</code> passed</td>
+                    <td id="result-1">Failed to parse script</td>
+                </tr>
+                <tr>
+                    <td>Evaluated each invocation</td>
+                    <td id="result-2">Failed to parse script</td>
+                </tr>
+                <tr>
+                    <td>Functions called to provide default values</td>
+                    <td id="result-3">Failed to parse script</td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            document.getElementById('results').innerText = 'Failed to parse script';
+        </script>
+
+        <script>
+            document.getElementById('results').innerText = '';
+            document.getElementById('results-table').style.display = 'table';
+
+            function fun(x = 5) {
+                return x;
+            }
+
+            var r = document.getElementById('result-0');
+            if (fun() === 5) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            document.getElementById('results').innerText = '';
+            document.getElementById('results-table').style.display = 'table';
+
+            function fun(x = 5) {
+                return x;
+            }
+
+            var r = document.getElementById('result-1');
+            if (fun(undefined) === 5) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            document.getElementById('results').innerText = '';
+            document.getElementById('results-table').style.display = 'table';
+
+            function fun(x = []) {
+                return x;
+            }
+
+            fun().push(5);
+            fun().push(6);
+
+            var r = document.getElementById('result-2');
+            if (fun().length === 0) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+
+        <script>
+            document.getElementById('results').innerText = '';
+            document.getElementById('results-table').style.display = 'table';
+
+            function fun0() {
+                return 0;
+            }
+
+            function fun1(x = fun0()) {
+                return x;
+            }
+
+            var r = document.getElementById('result-3');
+            if (fun1() === 0) {
+                r.innerHTML = '&#x1f642;';
+                r.setAttribute('title', 'Success');
+            }
+            else {
+                r.innerHTML = '&#x1f61e;';
+                r.setAttribute('title', 'Failure');
+            }
+        </script>
+    </body>
+</html>
