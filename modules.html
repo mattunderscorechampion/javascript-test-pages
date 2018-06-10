@@ -10,11 +10,19 @@
         <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
         <h1>Modules test page</h1>
         <p>
-            This page tests how your browser handles modules defined in ES2015.
-            Modules provide new ways of managing JavaScript code. Code can be
-            separate into different modules that have their own scopes. Objects
-            and functions that are exported by a module can be imported by
+            This page tests how your browser handles
+            <a href="https://jakearchibald.com/2017/es-modules-in-browsers/" title="modules">modules</a>
+            defined in ES2015.
+            Modules provide new ways of managing JavaScript code.
+            Code can be separate into different modules that have their own scopes.
+            Objects and functions that are exported by a module can be imported by
             another.
+            Inside modules
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" title="strict">strict mode</a>
+            is enabled.
+            Modules have there own scope but can export bindings to any other module that imports them.
+            It's possible to have cyclic dependencies between modules.
+            Import statements must be at the top level and are hoisted.
         </p>
         <h2>Example</h2>
         <x-listing data-caption="Using modules">&lt;script type="module">
