@@ -32,8 +32,8 @@
             The functions exported by the WASM module can be obtained from the instance.
         </p>
         <h2>Example</h2>
-        <x-listing data-caption="Calling WASM">WebAssembly
-    .instantiateStreaming(fetch('wasm/wasm.wasm'))
+        <x-listing data-caption="Calling WASM">fetch('wasm/wasm.wasm')
+    .then(response => WebAssembly.instantiateStreaming(response))
     .then(result => result.instance.exports.increment)
     .then(increment => increment(5));</x-listing>
         <h2>Results</h2>
@@ -77,8 +77,8 @@
                     supported.innerText += ' Fetch not available to load WASM code.';
                 }
                 else {
-                    WebAssembly
-                        .instantiateStreaming(fetch('wasm/wasm.wasm'))
+                    fetch('wasm/wasm.wasm')
+                        .then(response => WebAssembly.instantiateStreaming(response))
                         .then(handle_module, handle_module_error);
                 }
             }
