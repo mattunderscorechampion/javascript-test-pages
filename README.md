@@ -18,5 +18,15 @@ Answering questions about JavaScript and your browser.
     * [Arithmetic](https://mattunderscorechampion.github.io/javascript-test-pages/arithmetic.html)
     * [Bind, call and apply](https://mattunderscorechampion.github.io/javascript-test-pages/bind-call-apply.html)
     * [WebGL](https://mattunderscorechampion.github.io/javascript-test-pages/web-gl.html)
+    * [Async iteration](https://mattunderscorechampion.github.io/javascript-test-pages/async-iteration.html)
+    * [Shared workers](https://mattunderscorechampion.github.io/javascript-test-pages/shared-workers.html)
+    * [Arrow functions](https://mattunderscorechampion.github.io/javascript-test-pages/arrow-functions.html)
+    * [Template literals](https://mattunderscorechampion.github.io/javascript-test-pages/template-literals.html)
+    * [Camera](https://mattunderscorechampion.github.io/javascript-test-pages/camera.html)
+    * [Microphone](https://mattunderscorechampion.github.io/javascript-test-pages/microphone.html)
+    * [Local storage](https://mattunderscorechampion.github.io/javascript-test-pages/local-storage.html)
+    * [Object initialisation](https://mattunderscorechampion.github.io/javascript-test-pages/object-initialisation.html)
+    * [Default parameter values](https://mattunderscorechampion.github.io/javascript-test-pages/default-parameters.html)
+    * [WebAssembly](https://mattunderscorechampion.github.io/javascript-test-pages/wasm.html)
 
 Licensed under MIT
