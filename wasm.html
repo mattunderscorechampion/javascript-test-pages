@@ -20,7 +20,8 @@
         <h2>Example</h2>
         <x-listing data-caption="Calling WASM">WebAssembly
     .instantiateStreaming(fetch('wasm/wasm.wasm'))
-    .then(wasmModule => wasmModule.instance.exports.add_one(2));</x-listing>
+    .then(result => result.instance.exports.increment)
+    .then(increment => increment(5));</x-listing>
         <h2>Results</h2>
         <noscript>
             <p>
@@ -36,10 +37,10 @@
             function handle_module(result) {
                 supported.innerText += ' WASM code has been fetched.';
 
-                var add_one = result.instance.exports.add_one;
-                if (add_one) {
+                var increment = result.instance.exports.increment;
+                if (increment) {
                     supported.innerText += ' Functions exported by WASM code can be imported.';
-                    if (add_one(2) === 3) {
+                    if (increment(2) === 3) {
                         supported.innerText += ' WASM code is callable.';
                     }
                     else {
