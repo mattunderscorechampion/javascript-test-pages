@@ -33,22 +33,42 @@
         <script>
             var supported = document.getElementById('supported');
 
+            function handle_module(result) {
+                supported.innerText += ' WASM code has been fetched.';
+
+                var add_one = result.instance.exports.add_one;
+                if (add_one) {
+                    supported.innerText += ' Functions exported by WASM code can be imported.';
+                    if (add_one(2) === 3) {
+                        supported.innerText += ' WASM code is callable.';
+                    }
+                    else {
+                        supported.innerText += ' Problem with WASM code.';
+                    }
+                }
+                else {
+                    supported.innerText += ' Failed to import function from WASM code.';
+                }
+            }
+
+            function handle_module_error(err) {
+                supported.innerText += ' WASM code could not be fetched.';
+            }
+
             if (window.WebAssembly) {
-                supported.innerText += 'WebAssembly object found.';
+                supported.innerText = 'WebAssembly object found.';
 
-                WebAssembly.instantiateStreaming(fetch('wasm/wasm.wasm'))
-                    .then(wasmModule => {
-                        supported.innerText += ' WASM code has been fetched.';
-
-                        if (wasmModule.instance.exports.add_one(2) === 3) {
-                            supported.innerText += ' WASM code is callable.';
-                        }
-                        else {
-                            supported.innerText += ' Problem with WASM code.';
-                        }
-                    }, e => {
-                        supported.innerText += ' WASM code could not be fetched.';
-                    });
+                if (!window.fetch) {
+                    supported.innerText += ' Fetch not available to load WASM code.';
+                }
+                else {
+                    WebAssembly
+                        .instantiateStreaming(fetch('wasm/wasm.wasm'))
+                        .then(handle_module, handle_module_error);
+                }
+            }
+            else {
+                supported.innerText = 'No WebAssembly object found.';
             }
         </script>
     </body>
