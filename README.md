@@ -28,5 +28,6 @@ Answering questions about JavaScript and your browser.
     * [Object initialisation](https://mattunderscorechampion.github.io/javascript-test-pages/object-initialisation.html)
     * [Default parameter values](https://mattunderscorechampion.github.io/javascript-test-pages/default-parameters.html)
     * [WebAssembly](https://mattunderscorechampion.github.io/javascript-test-pages/wasm.html)
+    * [Fetch API](https://mattunderscorechampion.github.io/javascript-test-pages/fetch.html)
 
 Licensed under MIT

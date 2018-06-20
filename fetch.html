@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Fetch test page</title>
+        <meta name="description" content="Test how your browser handles fetching resources." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>WebAssembly test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" title="Fetch">fetching resources</a>.
+            Browsers have had the ability to fetch resources for a while.
+            A new API for doing this has been introduced that uses modern JavaScript practices.
+            This allows responses to be returned using Promises instead of
+            callbacks, customisation of how requests are made and the ability to get the response as a stream.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Fetching resources">fetch('resource.json')
+    .then(handle_resource)
+    .catch(e => console.error(e));
+        </x-listing>
+        <h2>Results</h2>
+        <noscript>
+            <p>
+                JavaScript is not supported or disabled in your browser.
+                There is no chance of this working.
+            </p>
+        </noscript>
+        <p id="supported"></p>
+
+        <script>
+            var supported = document.getElementById('supported');
+
+            function handle_fetch(response) {
+                supported.innerText += ' Fetching resources works as expected.';
+            }
+
+            function handle_fetch_error(err) {
+                supported.innerText += ' Problem fetching a resource that should be there.';
+            }
+
+            if (window.fetch) {
+                supported.innerText = 'Fetch function found.';
+
+                fetch('wasm/wasm.wasm')
+                    .then(handle_fetch, handle_fetch_error);
+            }
+            else {
+                supported.innerText = 'No fetch function found.';
+            }
+        </script>
+    </body>
+</html>
