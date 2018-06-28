@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>Property descriptors test page</title>
+        <meta name="description" content="Test how your browser handles property descriptors." />
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="import" href="imports/listing.html">
+        <script type="application/javascript" src="js/webcomponents.js"></script>
+    </head>
+    <body>
+        <p><a href="." title="Test pages">&lt;&lt; Test pages</a></p>
+        <h1>Property descriptors test page</h1>
+        <p>
+            This page tests how your browser handles
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors" title="property descriptors">property descriptors</a>.
+            A property descriptor is a description of the properties of an object.
+            It allows you to find out if a property is accessed through getters and setter or if it's a value.
+            It's used to <a href="https://en.wikipedia.org/wiki/Reflection_(computer_programming)" title="reflection">reflect</a> on objects.
+        </p>
+        <h2>Example</h2>
+        <x-listing data-caption="Using local storage">const descriptors = Object.getOwnPropertyDescriptors(example);
+console.log(descriptors.x.value);</x-listing>
+        <h2>Results</h2>
+        <noscript><p>JavaScript is not supported or disabled in your browser.
+            There is no chance of this working.</p></noscript>
+        <div id="results">
+            <p>
+                <table cellspacing="0">
+                    <tr>
+                        <td>Property descriptors lookup function</td>
+                        <td id="result-0"></td>
+                    </tr>
+                    <tr>
+                        <td>Property descriptors lookup succeeds</td>
+                        <td id="result-1"></td>
+                    </tr>
+                    <tr>
+                        <td>Property descriptors lookup finds property</td>
+                        <td id="result-2"></td>
+                    </tr>
+                    <tr>
+                        <td>Property descriptors lookup finds property value</td>
+                        <td id="result-3"></td>
+                    </tr>
+                    <tr>
+                        <td>Property descriptors lookup finds property mutability</td>
+                        <td id="result-4"></td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+
+        <script>
+            function test() {
+                var r0 = document.getElementById('result-0');
+                var r1 = document.getElementById('result-1');
+                var r2 = document.getElementById('result-2');
+                var r3 = document.getElementById('result-3');
+                var r4 = document.getElementById('result-4');
+
+                r0.innerHTML = '&#x1f61e;';
+                r0.setAttribute('title', 'Failure');
+                r1.innerHTML = '&#x1f61e;';
+                r1.setAttribute('title', 'Failure');
+                r2.innerHTML = '&#x1f61e;';
+                r2.setAttribute('title', 'Failure');
+                r3.innerHTML = '&#x1f61e;';
+                r3.setAttribute('title', 'Failure');
+                r4.innerHTML = '&#x1f61e;';
+                r4.setAttribute('title', 'Failure');
+
+                if (window.Object.getOwnPropertyDescriptors) {
+                    r0.innerHTML = '&#x1f642;';
+                    r0.setAttribute('title', 'Success');
+
+                    var x = {
+                        y: 5
+                    };
+
+                    var descriptor = Object.getOwnPropertyDescriptors(x);
+                    if (descriptor) {
+                        r1.innerHTML = '&#x1f642;';
+                        r1.setAttribute('title', 'Success');
+
+                        if (descriptor.y) {
+                            r2.innerHTML = '&#x1f642;';
+                            r2.setAttribute('title', 'Success');
+
+                            if (descriptor.y.value === 5) {
+                                r3.innerHTML = '&#x1f642;';
+                                r3.setAttribute('title', 'Success');
+                            }
+
+                            if (descriptor.y.writable === true) {
+                                r4.innerHTML = '&#x1f642;';
+                                r4.setAttribute('title', 'Success');
+                            }
+                        }
+                    }
+                }
+            }
+
+            test();
+        </script>
+    </body>
+</html>
